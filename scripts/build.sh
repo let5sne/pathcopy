@@ -5,7 +5,9 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DERIVED_DATA="${DERIVED_DATA:-/tmp/FinderPathCopyDerivedData}"
 cd "$ROOT"
 
-xattr -cr "$ROOT"
+for path in PathCopyApp PathCopyFinderExtension FinderPathCopy.xcodeproj project.yml; do
+  [[ -e "$path" ]] && xattr -cr "$path"
+done
 rm -rf "$DERIVED_DATA"
 
 xcodegen generate

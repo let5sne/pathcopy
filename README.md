@@ -28,6 +28,14 @@ PathCopy 做的事情很小：把“复制完整路径”固定放进 Finder 普
 
 ## 安装
 
+### 下载二进制包
+
+从 [Releases](https://github.com/let5sne/pathcopy/releases) 下载 `PathCopy.zip`，解压后把 `PathCopy.app` 拖到 `/Applications`，打开一次并启用 Finder 扩展。
+
+早期 Release 包目前是 ad-hoc signed，未做 Apple notarization。如果 macOS 阻止打开，可以右键点击 `PathCopy.app` 后选择“打开”，或按下面的源码方式本机构建。
+
+### 从源码构建
+
 先克隆仓库：
 
 ```bash
@@ -72,6 +80,27 @@ killall Finder
 
 项目包含 `FinderPathCopy.xcodeproj`，也可以直接用 Xcode 打开构建。脚本方式会用 `project.yml` 重新生成 Xcode 工程。
 
+## 发布二进制包
+
+推送 tag 会触发 GitHub Actions 自动构建 Release：
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+CI 会产出：
+
+- `PathCopy.zip`
+- `PathCopy.zip.sha256`
+
+本地也可以手动打包：
+
+```bash
+./scripts/build.sh
+./scripts/package.sh
+```
+
 ## 原理
 
 PathCopy 由两部分组成：
@@ -84,4 +113,3 @@ PathCopy 由两部分组成：
 ## 许可
 
 MIT
-
