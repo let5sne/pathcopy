@@ -1,0 +1,51 @@
+name: FinderPathCopy
+options:
+  bundleIdPrefix: com.yuanjiantsui
+  deploymentTarget:
+    macOS: "13.0"
+settings:
+  base:
+    CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: YES
+    GENERATE_INFOPLIST_FILE: NO
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    SWIFT_VERSION: "6.0"
+targets:
+  PathCopy:
+    type: application
+    platform: macOS
+    sources:
+      - PathCopyApp
+    dependencies:
+      - sdk: FinderSync.framework
+      - target: PathCopyFinderExtension
+        embed: true
+        codeSign: true
+    settings:
+      base:
+        INFOPLIST_FILE: PathCopyApp/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.yuanjiantsui.finderpathcopy
+        PRODUCT_NAME: PathCopy
+  PathCopyFinderExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - PathCopyFinderExtension
+    dependencies:
+      - sdk: FinderSync.framework
+    settings:
+      base:
+        APPLICATION_EXTENSION_API_ONLY: YES
+        ENABLE_APP_SANDBOX: YES
+        ENABLE_USER_SELECTED_FILES: readonly
+        INFOPLIST_FILE: PathCopyFinderExtension/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.yuanjiantsui.finderpathcopy.findersync
+        PRODUCT_NAME: PathCopyFinderExtension
+schemes:
+  PathCopy:
+    build:
+      targets:
+        PathCopy: all
